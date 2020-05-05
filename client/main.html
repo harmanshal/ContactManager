@@ -1,0 +1,101 @@
+<head>
+  <title>Contacts Directory</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-dark" style="background-color:#000000">
+    <a class="navbar-brand text-white ml-4">Contacts Manager</a>
+    <!-- Navbar content -->
+  </nav>
+  <div class="container-fluid pl-5 pt-3">
+    <h2>Create Contact</h2>
+    <div class="row">
+      <div class="col-md-8">
+        <div class="form-group">
+          <label for="cname">Name</label>
+          <input class="form-control" placeholder="John Doe" type="text" id="cname">
+        </div>
+        <div class="form-group">
+          <label for="cemail">Email</label>
+          <input class="form-control" placeholder="abc@xyz.com" type="email" id="cemail">
+        </div>
+        <div class="form-group">
+          <label for="cphone">Phone</label>
+          <input class="form-control" placeholder="9876543210" type="text" id="cphone">
+        </div> 
+        <div class="form-group text-center">
+          {{>save_contact}}
+        </div>
+
+      </div>
+      <div class="col-md-12 mt-3">
+        <h2>View Contacts</h2>
+        <div class="row">
+          {{#each contacts}}
+              {{>contact}}
+         {{/each}}  
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<template name="contact">
+
+  <div class="card col-md-3 m-3 p-0">
+    <div class="card-header">
+      <h3 class="card-title">{{cname}}</h3>
+    </div>
+    <div class="card-body">
+      <p class="card-text p-3">
+        <ul class="list-unstyled">
+          <li><b>Email : </b>{{ cemail }}</li>
+          <li><b>Phone : </b>{{ cphone }}</li>
+        </ul>
+      </p>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary mr-3" data-toggle="modal" data-target="#edit{{_id}}">Edit</button>
+      <button class="btn btn-danger" name="deletebtn" id="{{ _id }}">Delete</button>
+    </div>
+  </div>
+  <!-- Modal -->
+<div class="modal fade" id="edit{{_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Contact - {{ cname }}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="edit_cname">Name</label>
+          <input class="form-control" type="text" id="edit{{_id}}_cname" value="{{ cname }}">
+        </div>
+        <div class="form-group">
+          <label for="edit_cemail">Email</label>
+          <input class="form-control" type="email" id="edit{{_id}}_cemail" value="{{ cemail }}">
+        </div>
+        <div class="form-group">
+          <label for="edit_cphone">Phone</label>
+          <input class="form-control" type="text" id="edit{{_id}}_cphone" value="{{ cphone }}">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" name="updatebtn" id={{_id}} class="btn btn-primary" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<template name="save_contact">
+  <button id="savebtn" class="btn btn-lg btn-primary">Save Contact</button>
+</template>
